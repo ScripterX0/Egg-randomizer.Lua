@@ -1,0 +1,77 @@
+-- 🌱 Grow a Garden - Egg Randomizer GUI (Executor Version) 🌱
+-- This will create a GUI and randomize pets based on egg type
+
+local player = game.Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+
+-- Create ScreenGui
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "PetRandomizerGui"
+ScreenGui.Parent = playerGui
+
+-- Create Frame
+local Frame = Instance.new("Frame")
+Frame.Size = UDim2.new(0, 300, 0, 200)
+Frame.Position = UDim2.new(0.5, -150, 0.5, -100)
+Frame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+Frame.Parent = ScreenGui
+
+-- Title Label
+local Title = Instance.new("TextLabel")
+Title.Size = UDim2.new(1, 0, 0, 30)
+Title.Text = "Pet Randomizer"
+Title.TextColor3 = Color3.fromRGB(255,255,255)
+Title.Font = Enum.Font.GothamBold
+Title.BackgroundTransparency = 1
+Title.Parent = Frame
+
+-- Hatch Button
+local HatchBtn = Instance.new("TextButton")
+HatchBtn.Size = UDim2.new(0.9, 0, 0, 40)
+HatchBtn.Position = UDim2.new(0.05, 0, 0.3, 0)
+HatchBtn.Text = "Hatch Egg"
+HatchBtn.BackgroundColor3 = Color3.fromRGB(0,170,255)
+HatchBtn.TextColor3 = Color3.fromRGB(255,255,255)
+HatchBtn.Font = Enum.Font.GothamBold
+HatchBtn.Parent = Frame
+
+-- Result Label
+local Result = Instance.new("TextLabel")
+Result.Size = UDim2.new(1, 0, 0, 50)
+Result.Position = UDim2.new(0,0,0.65,0)
+Result.Text = "Waiting for Egg..."
+Result.TextColor3 = Color3.fromRGB(200,200,200)
+Result.Font = Enum.Font.GothamBold
+Result.BackgroundTransparency = 1
+Result.TextScaled = true
+Result.Parent = Frame
+
+-- 🐾 Egg → Pet Data
+local Pets = {
+	["Anti Bee Egg"] = {"Butterfly", "Disco Bee"},
+	["Bug Egg"] = {"Dragonfly"},
+	["Paradise Egg"] = {"Mimic Octopus"},
+	["Mythical Egg"] = {"Red Fox"},
+	["Gourmet Egg"] = {"Lobster"},
+	["Bee Egg"] = {"Queen Bee"}
+}
+
+-- 🎲 Function to Hatch Egg
+local function hatchEgg(eggType)
+	if Pets[eggType] then
+		local choices = Pets[eggType]
+		local petName = choices[math.random(1, #choices)]
+
+		-- Update GUI
+		Result.Text = "YOU GOT: " .. petName .. "!!!"
+		Result.TextColor3 = Color3.fromRGB(0, 255, 0)
+	else
+		Result.Text = "Unknown Egg..."
+		Result.TextColor3 = Color3.fromRGB(255, 0, 0)
+	end
+end
+
+-- 📌 Example: Always hatches "Anti Bee Egg"
+HatchBtn.MouseButton1Click:Connect(function()
+	hatchEgg("Anti Bee Egg") -- change "Anti Bee Egg" to test other eggs
+end)
